@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import Header from "./components/Header";
-import Home from "./pages/Home";
-import ApartmentIndex from "./pages/ApartmentIndex";
-import ApartmentShow from "./pages/ApartmentShow";
-import ApartmentNew from "./pages/ApartmentNew";
-import ApartmentEdit from "./pages/ApartmentEdit";
-import NotFound from "./pages/NotFound";
+import React, { Component } from 'react';
+import Header from './components/Header';
+import Home from './pages/Home';
+import ApartmentIndex from './pages/ApartmentIndex';
+import ApartmentShow from './pages/ApartmentShow';
+import ApartmentNew from './pages/ApartmentNew';
+import ApartmentEdit from './pages/ApartmentEdit';
+import NotFound from './pages/NotFound';
 // import mockApartments from "./mockApartments.js";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   indexApartment = () => {
-    fetch("http://localhost:3000//apartments")
+    fetch('http://localhost:3000//apartments')
       .then((response) => {
         console.log(response);
         return response.json();
@@ -32,21 +32,21 @@ class App extends Component {
         console.log(payload);
       })
       .catch((errors) => {
-        console.log("index errors:", errors);
+        console.log('index errors:', errors);
       });
   };
 
   createNewApartment = (newApartment) => {
-    return fetch("http://localhost:3000//apartments", {
+    return fetch('http://localhost:3000//apartments', {
       body: JSON.stringify(newApartment),
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
-      method: "POST"
+      method: 'POST'
     })
       .then((response) => {
         if (response.status === 422) {
-          alert("Please check your submission.");
+          alert('Please check your submission.');
         }
         return response.json();
       })
@@ -54,24 +54,24 @@ class App extends Component {
         this.indexApartment();
       })
       .catch((errors) => {
-        console.log("create errors:", errors);
+        console.log('create errors:', errors);
       });
   };
 
   updateApartment = (apartment, id) => {
-    console.log("apartment:", apartment);
-    console.log("id:", id);
+    console.log('apartment:', apartment);
+    console.log('id:', id);
 
     return fetch(`http://localhost:3000//apartments/${id}`, {
       body: JSON.stringify(apartment),
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
-      method: "PATCH"
+      method: 'PATCH'
     })
       .then((response) => {
         if (response.status === 422) {
-          alert("Please check your submission.");
+          alert('Please check your submission.');
         }
         return response.json();
       })
@@ -79,20 +79,20 @@ class App extends Component {
         this.indexApartment();
       })
       .catch((errors) => {
-        console.log("create errors:", errors);
+        console.log('create errors:', errors);
       });
   };
 
   deleteApartment = (id) => {
     fetch(`/apartments/${id}`, {
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
-      method: "DELETE"
+      method: 'DELETE'
     })
       .then((response) => {
         if (response.status === 422) {
-          alert("Something is wrong with your submission");
+          alert('Something is wrong with your submission');
         }
         return response.json();
       })
@@ -100,7 +100,7 @@ class App extends Component {
         this.apartmentIndex();
       })
       .catch((errors) => {
-        console.log("delete errors", errors);
+        console.log('delete errors', errors);
       });
   };
 
@@ -122,17 +122,17 @@ class App extends Component {
           sign_out_route={sign_out_route}
         />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path='/' component={Home} />
 
           <Route
-            path="/apartmentindex"
+            path='/apartmentindex'
             render={(props) => (
               <ApartmentIndex apartments={this.state.apartments} />
             )}
           />
           <Route
             exact
-            path="/apartmentshow/:id"
+            path='/apartmentshow/:id'
             render={(props) => {
               let id = props.match.params.id;
               let apartment = this.state.apartments.find(
@@ -148,7 +148,7 @@ class App extends Component {
           />
           {logged_in && (
             <Route
-              path="/apartmentnew"
+              path='/apartmentnew'
               render={(props) => {
                 return (
                   <ApartmentNew
@@ -162,7 +162,7 @@ class App extends Component {
 
           <Route
             exact
-            path="/apartmentedit/:id"
+            path='/apartmentedit/:id'
             render={(props) => {
               let id = props.match.params.id;
               let apartment = this.state.apartments.find(
